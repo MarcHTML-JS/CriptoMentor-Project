@@ -1,2 +1,0 @@
-# CriptoMentor-Project
-.
