@@ -47,9 +47,8 @@ nav a {
 nav a:hover {
   color: #ffffff;
 }
-
-nav a:nth-child(2) {
-  color: #ff9f43;
+nav a.activo {
+    color: #ff9f43;
 }
 
 .ticker {
