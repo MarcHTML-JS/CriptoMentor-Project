@@ -1,60 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <link rel="stylesheet" href="../index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoMentor - Iniciar Sesion</title>
+    <title>CriptoMentor - Iniciar Sesión</title>
+    <style>
+        .top-links-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #121212;
+            padding: 14px 0;
+            z-index: 1000;
+        }
+
+        .top-links-container {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            padding: 0 20px;
+        }
+
+        .top-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: opacity 0.2s ease;
+        }
+
+        .top-link:hover {
+            opacity: 0.65;
+            text-decoration: underline;
+        }
+
+        .top-link:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .top-links-container {
+                gap: 20px;
+            }
+            .top-link {
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-</body>
-</html>
-<main class="login-container">
-    <div class="login-header">
-        <h1 class="login-logo">CriptoMentor</h1>
-        <p class="login-subtitle">Tu asistente de IA para empezar a invertir</p>
-    </div>
-<form class="login-form" id="loginform">
-    <div class="form-group">
-        <label for="email">correo electrónico</label>
-        <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email" required>
-    </div>
-    <div class="form-group">
-        <label for="password">contraseña</label>
-        <div class="password-wrapper">
-            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
-            <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña">
-                <svg class="icon-eye" id="iconEye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                <svg class="icon-eye-off" id="iconEyeOff" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden>
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                </svg>
-             </button>
+    <nav class="top-links-bar">
+        <div class="top-links-container">
+            <a href="contacto.html" class="top-link">Contacto</a>
+            <a href="nosotros.html" class="top-link">Nosotros</a>
+            <a href="Inicio.html" class="top-link">Inicio</a>
         </div>
-      </div>
-      <button type="submit" class="btn-login">Iniciar Sesión</button>
-      <p class="register-text">
-        ¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a>
-      </p>
-    </form>
-</main>
-<script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    const iconEye = document.getElementById('iconEye');
-    const iconEyeOff = document.getElementById('iconEyeOff');
+    </nav>
 
-    togglePassword.addEventListener('click', () => {
-      const ishidden = passwordInput.getattribute('type') === 'password';
-      passwordInput.setAttribute('type', ishidden ? 'text' : 'password');
-      iconEye.hidden = !ishidden;
-      iconEyeOff.hidden = !ishidden;
-      togglePassword.setAttribute('aria-label', ishidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
-    });
-</script>
+    <main class="login-container">
+        <div class="login-header">
+            <h1 class="login-logo">CriptoMentor</h1>
+            <p class="login-subtitle">Tu asistente de IA para empezar a invertir</p>
+        </div>
+        <form class="login-form" id="loginform">
+            <div class="form-group">
+                <label for="email">correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">contraseña</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña">
+                        <svg class="icon-eye" id="iconEye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg class="icon-eye-off" id="iconEyeOff" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden>
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn-login">Iniciar Sesión</button>
+            <p class="register-text">
+                ¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a>
+            </p>
+        </form>
+    </main>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const iconEye = document.getElementById('iconEye');
+        const iconEyeOff = document.getElementById('iconEyeOff');
+
+        togglePassword.addEventListener('click', () => {
+            const isHidden = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isHidden ? 'text' : 'password');
+            iconEye.hidden = isHidden;
+            iconEyeOff.hidden = !isHidden;
+            togglePassword.setAttribute('aria-label', isHidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        });
+    </script>
+
 </body>
 </html>
