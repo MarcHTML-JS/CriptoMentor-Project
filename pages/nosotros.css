@@ -36,6 +36,42 @@ body::before {
     background-size: 40px 40px;
 }
 
+/* Header y navegación */
+
+.site-header {
+    padding: 1.75rem clamp(1.5rem, 5vw, 4rem);
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.main-nav a {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.main-nav a:hover {
+    color: var(--accent-gold);
+}
+
+.main-nav a.active {
+    color: var(--accent-gold);
+}
+
+.main-nav a:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
 .project-info {
     position: relative;
     display: grid;
