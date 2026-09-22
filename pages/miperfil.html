@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil - CriptoMentor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background-color: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header idéntico al de inicio */
+    header {
+      position: relative;
+      z-index: 50;
+      width: 100%;
+      padding: 1.75rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    nav a.activo {
+      color: #ff9f43;
+    }
+
+    .user-profile {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      background-color: #ff9f43;
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .user-name {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 50rem;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+
+    .encabezado {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .encabezado h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .encabezado hr {
+      width: 4rem;
+      height: 2px;
+      border: none;
+      background-color: #ff9f43;
+      margin: 0.5rem auto;
+    }
+
+    .encabezado p {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .perfil-card {
+      background-color: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .perfil-header-flex {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .avatar-grande {
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 9999px;
+      background-color: #ff9f43;
+      color: #0d1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .perfil-info h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .perfil-info p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 0.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      background-color: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.6rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: #ff9f43;
+      box-shadow: 0 0 0 2px rgba(255, 159, 67, 0.15);
+    }
+
+    .btn-guardar {
+      display: inline-block;
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background-color: #ff9f43;
+      color: #0d1117;
+      border: none;
+      border-radius: 0.6rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-guardar:hover {
+      opacity: 0.9;
+      transform: scale(1.01);
+    }
+
+    .btn-volver {
+      display: inline-block;
+      margin-top: 1.5rem;
+      text-align: center;
+      width: 100%;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .btn-volver:hover {
+      color: #ff9f43;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="index.html">Inicio</a>
+    </nav>
+    <div class="user-profile">
+      <span class="user-name">usuario_google</span>
+      <div class="user-avatar">U</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="encabezado">
+      <h1>Configuración de Cuenta</h1>
+      <hr>
+      <p>Administra los datos de tu perfil en CriptoMentor</p>
+    </div>
+
+    <div class="perfil-card">
+      <div class="perfil-header-flex">
+        <div class="avatar-grande">U</div>
+        <div class="perfil-info">
+          <h2>usuario_google</h2>
+          <p>usuario_google@gmail.com</p>
+        </div>
+      </div>
+
+      <form onsubmit="event.preventDefault(); alert('Cambios guardados correctamente');">
+        <div class="form-group">
+          <label for="nombre">Nombre de Usuario</label>
+          <input type="text" id="nombre" value="usuario_google">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input type="email" id="email" value="usuario_google@gmail.com">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Nueva Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn-guardar">Guardar Cambios</button>
+      </form>
+
+      <a href="index.html" class="btn-volver">← Volver al Inicio</a>
+    </div>
+  </main>
+
+</body>
+</html>

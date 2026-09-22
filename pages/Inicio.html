@@ -1,144 +1,632 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoMentor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CriptoMentor - Tu asistente de IA</title>
+  
+  <link rel="icon" href="image (4).webp">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <link rel="stylesheet" href="Inicio.css">
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background-color: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 50;
+      width: 100%;
+      padding: 1.75rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    nav a.activo {
+      color: #ff9f43;
+    }
+
+    .user-profile {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .user-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      background-color: #ff9f43;
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .user-name {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background-color: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      min-width: 11rem;
+      z-index: 999;
+      display: none;
+      overflow: hidden;
+    }
+
+    .user-dropdown a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s;
+    }
+
+    .user-dropdown a:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .user-dropdown a:last-child {
+      border-bottom: none;
+      color: #f87171;
+    }
+
+    .ticker {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 0.625rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .ticker span {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .ticker-up {
+      color: #34d399;
+    }
+
+    .ticker-down {
+      color: #f87171;
+    }
+
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+
+    .encabezado {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .encabezado h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .encabezado hr {
+      width: 4rem;
+      height: 2px;
+      border: none;
+      background-color: #ff9f43;
+      margin: 0.5rem auto;
+    }
+
+    .encabezado p {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .estadisticas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .estadisticas {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat {
+      background-color: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .stat-value {
+      margin-top: 0.4rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .stat-change {
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .stat-change.up {
+      color: #34d399;
+    }
+
+    .stat-change.down {
+      color: #f87171;
+    }
+
+    .contenido {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .contenido {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    .criptos {
+      background-color: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    .criptos h2 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .criptos ul {
+      list-style: none;
+    }
+
+    .criptos li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s;
+    }
+
+    .criptos li:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .criptos li:last-child {
+      border-bottom: none;
+    }
+
+    .crypto-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ff9f43;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .crypto-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .crypto-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .crypto-symbol {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .crypto-price {
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .crypto-change {
+      font-size: 0.75rem;
+      font-weight: 500;
+      min-width: 4rem;
+      text-align: right;
+    }
+
+    .crypto-change.up {
+      color: #34d399;
+    }
+
+    .crypto-change.down {
+      color: #f87171;
+    }
+
+    .chat {
+      display: flex;
+      flex-direction: column;
+      height: 32rem;
+      background-color: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .chat-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      background-color: #ff9f43;
+      color: #161b22;
+    }
+
+    .chat-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.65rem 0.95rem;
+      border-radius: 0.85rem;
+      font-size: 0.875rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e6edf3;
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background-color: #ff9f43;
+      color: #0d1117;
+      font-weight: 500;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    .chat-input-wrapper {
+      padding: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .chat-input {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.6rem;
+      padding: 0.35rem 0.35rem 0.35rem 0.85rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .chat-input:focus-within {
+      border-color: #ff9f43;
+      box-shadow: 0 0 0 2px rgba(255, 159, 67, 0.15);
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-size: 0.875rem;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .chat-input input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .chat-input button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      border-radius: 0.45rem;
+      background-color: #ff9f43;
+      color: #161b22;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+
+    .chat-input button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .chat-input button:active {
+      transform: scale(0.97);
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <a href="contacto.html">Contacto</a>
-            <a href="nosotros.html">Nosotros</a>
-            <a href="Inicio.html" class="activo">Inicio</a>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="index.html" class="activo">Inicio</a>
+    </nav>
 
-    <div class="ticker" style="display: flex; justify-content: center; align-items: center; gap: 35px;">
-        <span>BTC +2.34%</span>
-        <span>ETH +1.07%</span>
-        <span>SOL -0.85%</span>
-        <span>ADA +3.12%</span>
-        <span>XRP -1.43%</span>
-        <span>DOGE +5.67%</span>
-        <span>BNB +0.92%</span>
-        <span>AVAX +2.11%</span>
-        <span>DOT -0.34%</span>
-        <span>MATIC +1.88%</span>
+    <div class="user-profile" id="userProfileBtn">
+      <span class="user-name">usuario_google</span>
+      <div class="user-avatar">U</div>
+
+      <div class="user-dropdown" id="userDropdown">
+        <a href="miperfil.html">Mi perfil</a>
+        <a href="configuracion.html">Configuración</a>
+        <a href="login.html" onclick="localStorage.clear();">Cerrar Sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker">
+    <span class="ticker-up">ADA +5.98%</span>
+    <span class="ticker-up">XRP +5.49%</span>
+    <span class="ticker-up">DOGE +10.29%</span>
+    <span class="ticker-up">BNB +4.78%</span>
+    <span class="ticker-down">AVAX -1.13%</span>
+    <span class="ticker-up">DOT +4.80%</span>
+  </div>
+
+  <main>
+    <div class="encabezado">
+      <h1>CriptoMentor</h1>
+      <hr>
+      <p>Tu asistente de IA para empezar a invertir</p>
     </div>
 
-    <main>
-        <section class="encabezado">
-            <h1>CriptoMentor</h1>
-            <hr>
-            <p>Tu asistente de IA para empezar a invertir</p>
-        </section>
+    <div class="estadisticas">
+      <div class="stat">
+        <div class="stat-label">Cap. de Mercado</div>
+        <div class="stat-value">$2.41T</div>
+        <div class="stat-change up">+1.8%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Volumen 24h</div>
+        <div class="stat-value">$98.2B</div>
+        <div class="stat-change down">-3.4%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Dominancia BTC</div>
+        <div class="stat-value">52.3%</div>
+        <div class="stat-change up">+0.2%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Miedo / Codicia</div>
+        <div class="stat-value">72</div>
+        <div class="stat-change up" style="color: #34d399;">Codicia</div>
+      </div>
+    </div>
 
-        <section class="estadisticas">
-            <div class="stat">
-                <p class="stat-label">Cap. de Mercado</p>
-                <p class="stat-value">$2.41T</p>
-                <p class="stat-change up">+1.8%</p>
+    <div class="contenido">
+      <div class="criptos">
+        <h2>Principales Criptomonedas</h2>
+        <ul>
+          <li>
+            <div class="crypto-icon">ADA</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Cardano</div>
+              <div class="crypto-symbol">ADA</div>
             </div>
-            <div class="stat">
-                <p class="stat-label">Volumen 24h</p>
-                <p class="stat-value">$98.2B</p>
-                <p class="stat-change down">-3.4%</p>
+            <div class="crypto-price">$0.2420</div>
+            <div class="crypto-change up">+5.98%</div>
+          </li>
+          <li>
+            <div class="crypto-icon">XRP</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Ripple</div>
+              <div class="crypto-symbol">XRP</div>
             </div>
-            <div class="stat">
-                <p class="stat-label">Dominancia BTC</p>
-                <p class="stat-value">52.3%</p>
-                <p class="stat-change up">+0.2%</p>
+            <div class="crypto-price">$1.48</div>
+            <div class="crypto-change up">+5.49%</div>
+          </li>
+          <li>
+            <div class="crypto-icon">DOGE</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Dogecoin</div>
+              <div class="crypto-symbol">DOGE</div>
             </div>
-            <div class="stat">
-                <p class="stat-label">Miedo / Codicia</p>
-                <p class="stat-value">72</p>
-                <p class="stat-change up">Codicia</p>
+            <div class="crypto-price">$0.0954</div>
+            <div class="crypto-change up">+10.29%</div>
+          </li>
+          <li>
+            <div class="crypto-icon">BNB</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Binance Coin</div>
+              <div class="crypto-symbol">BNB</div>
             </div>
-        </section>
+            <div class="crypto-price">$610.50</div>
+            <div class="crypto-change up">+4.78%</div>
+          </li>
+          <li>
+            <div class="crypto-icon">AVAX</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Avalanche</div>
+              <div class="crypto-symbol">AVAX</div>
+            </div>
+            <div class="crypto-price">$28.40</div>
+            <div class="crypto-change down">-1.13%</div>
+          </li>
+          <li>
+            <div class="crypto-icon">DOT</div>
+            <div class="crypto-info">
+              <div class="crypto-name">Polkadot</div>
+              <div class="crypto-symbol">DOT</div>
+            </div>
+            <div class="crypto-price">$7.20</div>
+            <div class="crypto-change up">+4.80%</div>
+          </li>
+        </ul>
+      </div>
 
-        <section class="contenido">
-            <div class="criptos">
-                <h2>Principales Criptomonedas</h2>
-                <ul>
-                    <li>
-                        <span class="crypto-icon">BTC</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Bitcoin</p>
-                            <p class="crypto-symbol">BTC</p>
-                        </div>
-                        <p class="crypto-price">$64,238.50</p>
-                        <p class="crypto-change up">+2.34%</p>
-                    </li>
-                    <li>
-                        <span class="crypto-icon">ETH</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Ethereum</p>
-                            <p class="crypto-symbol">ETH</p>
-                        </div>
-                        <p class="crypto-price">$3,142.18</p>
-                        <p class="crypto-change up">+1.07%</p>
-                    </li>
-                    <li>
-                        <span class="crypto-icon">SOL</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Solana</p>
-                            <p class="crypto-symbol">SOL</p>
-                        </div>
-                        <p class="crypto-price">$148.92</p>
-                        <p class="crypto-change down">-0.85%</p>
-                    </li>
-                    <li>
-                        <span class="crypto-icon">ADA</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Cardano</p>
-                            <p class="crypto-symbol">ADA</p>
-                        </div>
-                        <p class="crypto-price">$0.5821</p>
-                        <p class="crypto-change up">+3.12%</p>
-                    </li>
-                    <li>
-                        <span class="crypto-icon">XRP</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Ripple</p>
-                            <p class="crypto-symbol">XRP</p>
-                        </div>
-                        <p class="crypto-price">$0.6234</p>
-                        <p class="crypto-change down">-1.43%</p>
-                    </li>
-                    <li>
-                        <span class="crypto-icon">DOGE</span>
-                        <div class="crypto-info">
-                            <p class="crypto-name">Dogecoin</p>
-                            <p class="crypto-symbol">DOGE</p>
-                        </div>
-                        <p class="crypto-price">$0.1623</p>
-                        <p class="crypto-change up">+5.67%</p>
-                    </li>
-                </ul>
-            </div>
+      <div class="chat">
+        <div class="chat-header">
+          <div class="chat-avatar">🧠</div>
+          <div class="chat-info">
+            <span class="chat-title">Cripto IA</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="message ai">
+            Hola, Soy tu asistente de inversiones. ¿En qué proyecto o criptomoneda querés enfocar tu portafolio hoy?
+          </div>
+        </div>
+        <div class="chat-input-wrapper">
+          <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Hazme una pregunta sobre inversiones...">
+            <button type="button" id="chatSendBtn">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-            <div class="chat">
-                <div class="chat-header">
-                    <div class="chat-avatar">🤖</div>
-                    <div>
-                        <p class="chat-title">Asistente IA</p>
-                        <p class="chat-subtitle">Demo visual</p>
-                    </div>
-                </div>
-                <div class="chat-messages">
-                    <div class="message ai">Hola, soy tu asistente de criptomonedas. Pregúntame cualquier cosa (demo visual).</div>
-                </div>
-                <div class="chat-input">
-                    <input type="text" placeholder="Escribe un mensaje...">
-                    <button>➤</button>
-                </div>
-            </div>
-        </section>
-    </main>
+ <script>
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const userDropdown = document.getElementById('userDropdown');
+
+    userProfileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', () => {
+      userDropdown.style.display = 'none';
+    });
+  </script>
+
+  <script src="chat.js"></script>
 
 </body>
 </html>
