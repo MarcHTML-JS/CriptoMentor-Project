@@ -7,514 +7,7 @@
   
   <link rel="icon" href="image (4).webp">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background-color: #0d1117;
-      color: #ffffff;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    header {
-      position: relative;
-      z-index: 50;
-      width: 100%;
-      padding: 1.75rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    nav {
-      display: flex;
-      gap: 2.5rem;
-    }
-
-    nav a {
-      color: rgba(255, 255, 255, 0.8);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: #ffffff;
-    }
-
-    nav a.activo {
-      color: #ff9f43;
-    }
-
-    .user-profile {
-      position: absolute;
-      right: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      z-index: 100;
-    }
-
-    .user-avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 9999px;
-      background-color: #ff9f43;
-      color: #0d1117;
-      font-weight: 700;
-      font-size: 0.875rem;
-    }
-
-    .user-name {
-      font-size: 0.875rem;
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: 500;
-    }
-
-    .user-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-top: 0.5rem;
-      background-color: #161b22;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.5rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      min-width: 11rem;
-      z-index: 999;
-      display: none;
-      overflow: hidden;
-    }
-
-    .user-dropdown a {
-      display: block;
-      padding: 0.75rem 1rem;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.875rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      transition: background-color 0.2s;
-    }
-
-    .user-dropdown a:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .user-dropdown a:last-child {
-      border-bottom: none;
-      color: #f87171;
-    }
-
-    .ticker {
-      position: relative;
-      z-index: 10;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 0.625rem 0;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .ticker span {
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .ticker-up {
-      color: #34d399;
-    }
-
-    .ticker-down {
-      color: #f87171;
-    }
-
-    main {
-      position: relative;
-      z-index: 10;
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 3rem 1rem;
-    }
-
-    .encabezado {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .encabezado h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 2.25rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .encabezado hr {
-      width: 4rem;
-      height: 2px;
-      border: none;
-      background-color: #ff9f43;
-      margin: 0.5rem auto;
-    }
-
-    .encabezado p {
-      margin-top: 0.75rem;
-      font-size: 0.875rem;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .estadisticas {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (min-width: 1024px) {
-      .estadisticas {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .stat {
-      background-color: #161b22;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.75rem;
-      padding: 1rem;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .stat-value {
-      margin-top: 0.4rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    .stat-change {
-      margin-top: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-align: right;
-    }
-
-    .stat-change.up {
-      color: #34d399;
-    }
-
-    .stat-change.down {
-      color: #f87171;
-    }
-
-    .contenido {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    @media (min-width: 1024px) {
-      .contenido {
-        grid-template-columns: 2fr 1fr;
-      }
-    }
-
-    .criptos {
-      background-color: #161b22;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.75rem;
-      overflow: hidden;
-    }
-
-    .criptos h2 {
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .criptos ul {
-      list-style: none;
-    }
-
-    .criptos li {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      transition: background-color 0.2s;
-    }
-
-    .criptos li:hover {
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-
-    .criptos li:last-child {
-      border-bottom: none;
-    }
-
-    .crypto-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 9999px;
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #ff9f43;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-
-    .crypto-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .crypto-name {
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .crypto-symbol {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .crypto-price {
-      font-size: 0.875rem;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-    }
-
-    .crypto-change {
-      font-size: 0.75rem;
-      font-weight: 500;
-      min-width: 4rem;
-      text-align: right;
-    }
-
-    .crypto-change.up {
-      color: #34d399;
-    }
-
-    .crypto-change.down {
-      color: #f87171;
-    }
-
-    .chat {
-      display: flex;
-      flex-direction: column;
-      height: 32rem;
-      background-color: #161b22;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.75rem;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .chat-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-
-    .chat-avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
-      border-radius: 0.5rem;
-      background-color: #ff9f43;
-      color: #161b22;
-    }
-
-    .chat-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-
-    .message {
-      max-width: 85%;
-      padding: 0.65rem 0.95rem;
-      border-radius: 0.85rem;
-      font-size: 0.875rem;
-      line-height: 1.45;
-      word-break: break-word;
-    }
-
-    .message.ai {
-      align-self: flex-start;
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #e6edf3;
-      border-bottom-left-radius: 0.2rem;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      background-color: #ff9f43;
-      color: #0d1117;
-      font-weight: 500;
-      border-bottom-right-radius: 0.2rem;
-    }
-
-    .chat-input-wrapper {
-      padding: 0.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background-color: rgba(0, 0, 0, 0.15);
-    }
-
-    .chat-input {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background-color: #0d1117;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 0.6rem;
-      padding: 0.35rem 0.35rem 0.35rem 0.85rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .chat-input:focus-within {
-      border-color: #ff9f43;
-      box-shadow: 0 0 0 2px rgba(255, 159, 67, 0.15);
-    }
-
-    .chat-input input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      font-size: 0.875rem;
-      color: #ffffff;
-      outline: none;
-    }
-
-    .chat-input input::placeholder {
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .chat-input button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      border: none;
-      border-radius: 0.45rem;
-      background-color: #ff9f43;
-      color: #161b22;
-      cursor: pointer;
-      transition: transform 0.15s, opacity 0.2s;
-    }
-
-    .chat-input button:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-    }
-
-    .chat-input button:active {
-      transform: scale(0.97);
-    }
-
-    .mini-graficos {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .mini-graficos {
-        flex-direction: row;
-      }
-    }
-
-    .tarjeta-mini {
-      flex: 1;
-      min-width: 250px;
-      background-color: rgba(22, 27, 34, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.75rem;
-      padding: 1rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .tarjeta-mini-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-    }
-
-    .tarjeta-mini-title {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      color: #ffffff;
-      font-size: 0.9rem;
-    }
-
-    .tarjeta-mini-canvas-container {
-      height: 4rem;
-      width: 100%;
-      position: relative;
-    }
-  </style>
+  <link rel="stylesheet" href="Inicio.css">
 </head>
 <body>
 
@@ -522,7 +15,7 @@
     <nav>
       <a href="contacto.html">Contacto</a>
       <a href="nosotros.html">Nosotros</a>
-      <a href="index.html" class="activo">Inicio</a>
+      <a href="Inicio.html" class="activo">Inicio</a>
     </nav>
 
     <div class="user-profile" id="userProfileBtn">
@@ -536,15 +29,6 @@
       </div>
     </div>
   </header>
-
-  <div class="ticker">
-    <span class="ticker-up">ADA +5.98%</span>
-    <span class="ticker-up">XRP +5.49%</span>
-    <span class="ticker-up">DOGE +10.29%</span>
-    <span class="ticker-up">BNB +4.78%</span>
-    <span class="ticker-down">AVAX -1.13%</span>
-    <span class="ticker-up">DOT +4.80%</span>
-  </div>
 
   <main>
     <div class="encabezado">
@@ -658,33 +142,145 @@
       </div>
     </div>
 
-    <div class="mini-graficos">
-      <div class="tarjeta-mini">
-        <div class="tarjeta-mini-header">
-          <div class="tarjeta-mini-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#f7931a"><path d="M14.01 10.22c.96-.28 1.69-1.07 1.69-2.22 0-1.89-1.63-2.67-3.79-2.67H9.28v13.34h2.95v-2.31h2.18c2.4 0 4.1-1.07 4.1-3.08 0-1.58-1.01-2.55-2.5-2.82zm-1.78-2.92c1.08 0 1.63.42 1.63 1.25 0 .86-.6 1.28-1.71 1.28h-1.85V7.3h1.93zm.7 7.72c-1.22 0-1.92-.48-1.92-1.38 0-.93.75-1.4 2.06-1.4h1.79v1.27c0 .94-.65 1.51-1.93 1.51z"/></svg>
-            BTC
+    <div class="carousel-wrapper">
+      <button class="carousel-btn left" id="btnSlideLeft">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="carousel-track" id="miniChartsTrack">
+        
+        <div class="tarjeta-mini">
+          <div>
+            <div class="tarjeta-mini-header">
+              <div class="tarjeta-mini-info">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#f7931a"><path d="M14.01 10.22c.96-.28 1.69-1.07 1.69-2.22 0-1.89-1.63-2.67-3.79-2.67H9.28v13.34h2.95v-2.31h2.18c2.4 0 4.1-1.07 4.1-3.08 0-1.58-1.01-2.55-2.5-2.82zm-1.78-2.92c1.08 0 1.63.42 1.63 1.25 0 .86-.6 1.28-1.71 1.28h-1.85V7.3h1.93zm.7 7.72c-1.22 0-1.92-.48-1.92-1.38 0-.93.75-1.4 2.06-1.4h1.79v1.27c0 .94-.65 1.51-1.93 1.51z"/></svg>
+                <div class="tarjeta-mini-names">
+                  <span class="crypto-title-name">Bitcoin</span>
+                  <span class="crypto-title-symbol">BTC</span>
+                </div>
+              </div>
+              <div class="crypto-badge down">-0.05%</div>
+            </div>
+            <div class="tarjeta-mini-price">$60,100.00</div>
           </div>
-          <div class="crypto-change down">-0.051%</div>
+          <div class="tarjeta-mini-canvas-container">
+            <canvas id="miniBtcChart"></canvas>
+          </div>
         </div>
-        <div class="tarjeta-mini-canvas-container">
-          <canvas id="miniBtcChart"></canvas>
+
+        <div class="tarjeta-mini">
+          <div>
+            <div class="tarjeta-mini-header">
+              <div class="tarjeta-mini-info">
+                <svg width="18" height="24" viewBox="0 0 24 24" fill="#627eea"><path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.37 4.35zm.056-17.97L4.65 11.67l7.35 4.34 7.35-4.34L12 0z"/></svg>
+                <div class="tarjeta-mini-names">
+                  <span class="crypto-title-name">Ethereum</span>
+                  <span class="crypto-title-symbol">ETH</span>
+                </div>
+              </div>
+              <div class="crypto-badge up">+2.01%</div>
+            </div>
+            <div class="tarjeta-mini-price">$3,300.00</div>
+          </div>
+          <div class="tarjeta-mini-canvas-container">
+            <canvas id="miniEthChart"></canvas>
+          </div>
+        </div>
+
+        <div class="tarjeta-mini">
+          <div>
+            <div class="tarjeta-mini-header">
+              <div class="tarjeta-mini-info">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#14F195"><path d="M21.2 5.5l-1.9-1.9c-.3-.3-.7-.4-1.1-.4H3.7c-.8 0-1.2 1-.7 1.6l1.9 1.9c.3.3.7.4 1.1.4h14.5c.8 0 1.2-1 .7-1.6zM21.2 11.5l-1.9-1.9c-.3-.3-.7-.4-1.1-.4H3.7c-.8 0-1.2 1-.7 1.6l1.9 1.9c.3.3.7.4 1.1.4h14.5c.8 0 1.2-1 .7-1.6zM3.7 15.3c-.8 0-1.2 1-.7 1.6l1.9 1.9c.3.3.7.4 1.1.4h14.5c.8 0 1.2-1 .7-1.6l-1.9-1.9c-.3-.3-.7-.4-1.1-.4H3.7z"/></svg>
+                <div class="tarjeta-mini-names">
+                  <span class="crypto-title-name">Solana</span>
+                  <span class="crypto-title-symbol">SOL</span>
+                </div>
+              </div>
+              <div class="crypto-badge up">+4.12%</div>
+            </div>
+            <div class="tarjeta-mini-price">$165.00</div>
+          </div>
+          <div class="tarjeta-mini-canvas-container">
+            <canvas id="miniSolChart"></canvas>
+          </div>
+        </div>
+
+        <div class="tarjeta-mini">
+          <div>
+            <div class="tarjeta-mini-header">
+              <div class="tarjeta-mini-info">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#00A3FF"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm0 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zm0-10a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>
+                <div class="tarjeta-mini-names">
+                  <span class="crypto-title-name">Cardano</span>
+                  <span class="crypto-title-symbol">ADA</span>
+                </div>
+              </div>
+              <div class="crypto-badge down">-1.20%</div>
+            </div>
+            <div class="tarjeta-mini-price">$0.2420</div>
+          </div>
+          <div class="tarjeta-mini-canvas-container">
+            <canvas id="miniAdaChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="carousel-btn right" id="btnSlideRight">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <section class="features-section">
+      <div>
+        <div class="feature-content active" id="tab-estrategias">
+          <h2>Estrategias en vivo</h2>
+          <p>Estrategias populares como Three Black Crows y DPO+MA junto con sus gráficos y envían señales automáticas a medida que se mueve el mercado.</p>
+          <a href="#" class="btn-feature">Comienza</a>
+        </div>
+
+        <div class="feature-content" id="tab-indicadores">
+          <h2>Indicadores de script</h2>
+          <p>Crea y guarda tus propios indicadores personalizados con más de 100 herramientas listas para usar. ¡Tu estrategia, tus reglas!</p>
+          <a href="#" class="btn-feature">Comienza</a>
+        </div>
+
+        <div class="feature-content" id="tab-seminarios">
+          <h2>Seminarios web en la plataforma</h2>
+          <p>Aprende de los tutores profesionales en tiempo real sin salir de tu centro de control.</p>
+          <a href="#" class="btn-feature">Comienza</a>
+        </div>
+
+        <div class="feature-content" id="tab-chats">
+          <h2>Chats temáticos</h2>
+          <p>Chatea directamente con operadores de trading sobre Forex, cripto y más.</p>
+          <a href="#" class="btn-feature">Comienza</a>
+        </div>
+
+        <div class="features-nav">
+          <button class="feature-tab active" data-target="tab-estrategias">Estrategias en vivo</button>
+          <button class="feature-tab" data-target="tab-indicadores">Indicadores de script</button>
+          <button class="feature-tab" data-target="tab-seminarios">Seminarios web en la plataforma</button>
+          <button class="feature-tab" data-target="tab-chats">Chats temáticos</button>
         </div>
       </div>
 
-      <div class="tarjeta-mini">
-        <div class="tarjeta-mini-header">
-          <div class="tarjeta-mini-title">
-            <svg width="14" height="20" viewBox="0 0 24 24" fill="#627eea"><path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.37 4.35zm.056-17.97L4.65 11.67l7.35 4.34 7.35-4.34L12 0z"/></svg>
-            ETH
-          </div>
-          <div class="crypto-change up">+2.01%</div>
-        </div>
-        <div class="tarjeta-mini-canvas-container">
-          <canvas id="miniEthChart"></canvas>
+      <div class="feature-preview">
+        <div style="font-family: monospace; font-size: 0.85rem; color: #8b949e; line-height: 1.4;">
+          <span style="color: #ff7b72;">instrument</span>(<br>
+          &nbsp;&nbsp;<span style="color: #d2a8ff;">name</span>: <span style="color: #a5d6ff;">"Stochastic RSI with Signals"</span>,<br>
+          &nbsp;&nbsp;<span style="color: #d2a8ff;">icon</span>: <span style="color: #a5d6ff;">"ci"</span>,<br>
+          &nbsp;&nbsp;<span style="color: #d2a8ff;">overlay</span>: <span style="color: #79c0ff;">true</span><br>
+          )<br><br>
+          <span style="color: #7ee787;">K_period</span> <span style="color: #ff7b72;">input</span>(<span style="color: #79c0ff;">14</span>, <span style="color: #a5d6ff;">"K Period"</span>, <span style="color: #79c0ff;">integer</span>, <span style="color: #79c0ff;">1</span>, <span style="color: #79c0ff;">1000</span>)<br>
+          <span style="color: #7ee787;">K_title</span> <span style="color: #ff7b72;">input</span>(<span style="color: #a5d6ff;">"K Period"</span>, <span style="color: #a5d6ff;">input.string_selection</span>, inputs titles)<br>
+          <span style="color: #7ee787;">D_period</span> <span style="color: #ff7b72;">input</span>(<span style="color: #79c0ff;">3</span>, <span style="color: #a5d6ff;">"D Period"</span>, <span style="color: #79c0ff;">integer</span>, <span style="color: #79c0ff;">1</span>, <span style="color: #79c0ff;">1000</span>)<br>
+          <span style="color: #7ee787;">Smooth</span> <span style="color: #ff7b72;">input</span>(<span style="color: #79c0ff;">3</span>, <span style="color: #a5d6ff;">"MA Smooth"</span>, <span style="color: #79c0ff;">integer</span>, <span style="color: #79c0ff;">1</span>, <span style="color: #79c0ff;">1000</span>)
         </div>
       </div>
-    </div>
+    </section>
+
   </main>
 
   <script>
@@ -702,8 +298,7 @@
   </script>
 
   <script src="chat.js"></script>
-
- <script src="graficos.js"></script>
+  <script src="graficos.js"></script>
 
 </body>
 </html>
