@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CriptoMentor - Iniciar Sesion</title>
-    <link rel="stylesheet" href="CriptoMentor-Project/index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <main class="login-container">
-    <div class="login-visual">
-        <div id="bitcoin-container"></div>
-    </div>
-    <div class="login-form-panel">
         <div class="login-header">
             <h1 class="login-logo">CriptoMentor</h1>
             <p class="login-subtitle">Tu asistente de IA para empezar a invertir</p>
@@ -39,7 +35,6 @@
             </div>
             <button type="submit" class="btn-login">Iniciar Sesión</button>
         </form>
-    </div>
 </main>
 
 <script>
@@ -55,138 +50,6 @@
       iconEyeOff.hidden = !ishidden;
       togglePassword.setAttribute('aria-label', ishidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
     });
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-const container = document.getElementById('bitcoin-container');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-camera.position.z = 5;
-
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-container.appendChild(renderer.domElement);
-
-scene.add(new THREE.AmbientLight(0x8899ff, 0.6));
-
-const keyLight = new THREE.PointLight(0x8b5cf6, 2, 20);
-keyLight.position.set(3, 3, 4);
-scene.add(keyLight);
-
-const rimLight = new THREE.PointLight(0x22d3ee, 1.5, 20);
-rimLight.position.set(-3, -2, 3);
-scene.add(rimLight);
-
-function createFaceTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-
-    const cx = 256;
-    const cy = 256;
-
-    ctx.fillStyle = '#f7931a';
-    ctx.beginPath();
-    ctx.arc(cx, cy, 256, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.lineWidth = 8;
-    ctx.beginPath();
-    ctx.arc(cx, cy, 236, 0, Math.PI * 2);
-    ctx.stroke();
-
-    ctx.fillStyle = '#ffffff';
-
-    const spineLeft = cx - 95;
-    const spineWidth = 70;
-    const spineRight = spineLeft + spineWidth;
-    const spineTop = cy - 150;
-    const spineBottom = cy + 150;
-
-    ctx.fillRect(spineLeft, spineTop, spineWidth, spineBottom - spineTop);
-
-    const radius = 78;
-    const lobeOffsets = [cy - 72, cy + 72];
-
-    lobeOffsets.forEach((lobeCy) => {
-        ctx.beginPath();
-        ctx.arc(spineRight, lobeCy, radius, -Math.PI / 2, Math.PI / 2);
-        ctx.closePath();
-        ctx.fill();
-    });
-
-    const tickWidth = 18;
-    const gap = 14;
-    const tick1X = cx - gap / 2 - tickWidth;
-    const tick2X = cx + gap / 2;
-
-    ctx.fillRect(tick1X, spineTop - 45, tickWidth, 50);
-    ctx.fillRect(tick2X, spineTop - 45, tickWidth, 50);
-    ctx.fillRect(tick1X, spineBottom - 5, tickWidth, 50);
-    ctx.fillRect(tick2X, spineBottom - 5, tickWidth, 50);
-
-    return new THREE.CanvasTexture(canvas);
-}
-
-const faceTexture = createFaceTexture();
-
-const sideMaterial = new THREE.MeshStandardMaterial({
-    color: 0xf7931a,
-    metalness: 0.85,
-    roughness: 0.25
-});
-
-const faceMaterial = new THREE.MeshStandardMaterial({
-    map: faceTexture,
-    metalness: 0.6,
-    roughness: 0.3
-});
-
-const geometry = new THREE.CylinderGeometry(1.4, 1.4, 0.3, 64, 1, false);
-const coin = new THREE.Mesh(geometry, [sideMaterial, faceMaterial, faceMaterial]);
-coin.rotation.x = Math.PI / 2;
-scene.add(coin);
-
-const ringGeometry = new THREE.TorusGeometry(1.45, 0.02, 16, 80);
-const ringMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    metalness: 1,
-    roughness: 0.15
-});
-const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-ring.rotation.x = 0;
-scene.add(ring);
-
-let mouseX = 0;
-let mouseY = 0;
-
-container.addEventListener('mousemove', (e) => {
-    const rect = container.getBoundingClientRect();
-    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-});
-
-function animate() {
-    coin.rotation.z += 0.01;
-    ring.rotation.z += 0.01;
-
-    coin.rotation.y += (mouseX * 0.6 - coin.rotation.y) * 0.05;
-    ring.rotation.y = coin.rotation.y;
-
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-}
-animate();
-
-window.addEventListener('resize', () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-});
 </script>
 </body>
 </html>
