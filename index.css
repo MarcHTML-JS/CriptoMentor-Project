@@ -211,3 +211,32 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px -8px rgba(255, 115, 0, 0.6);
 }
+.site-header {
+    padding: 20px 40px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+}
+
+.main-nav a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.25s ease;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover {
+    color: #fff;
+}
+
+.main-nav a.active {
+    color: var(--brand-orange);
+    border-bottom-color: var(--brand-orange);
+}
