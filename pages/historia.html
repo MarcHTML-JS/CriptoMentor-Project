@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="icon" type="image/png" href="image (4).webp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historia de las Criptomonedas — CryptoMentor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #080d1e;
+        --brand-orange: #ff7300;
+        --brand-red: #ff2a00;
+        --glass-bg: rgba(16, 23, 45, 0.6);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --muted: rgba(255, 255, 255, 0.6);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        margin: 0;
+        color: white;
+        min-height: 100vh;
+    }
+
+    .site-header {
+        padding: 20px 40px;
+    }
+
+    .main-nav {
+        display: flex;
+        justify-content: center;
+        gap: 36px;
+    }
+
+    .main-nav a {
+        color: rgba(255, 255, 255, 0.65);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        transition: color 0.25s ease;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+        color: #fff;
+    }
+
+    .main-nav a.active {
+        color: var(--brand-orange);
+        border-bottom-color: var(--brand-orange);
+    }
+
+    main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px 24px 80px;
+    }
+
+    .page-head {
+        text-align: center;
+        margin: 20px 0 50px;
+    }
+
+    .page-head h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        margin: 0 0 10px;
+    }
+
+    .page-head p {
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 560px;
+        margin: 0 auto;
+    }
+
+    .timeline-scheme {
+        display: flex;
+        overflow-x: auto;
+        gap: 0;
+        padding: 30px 10px 40px;
+        margin-bottom: 50px;
+        position: relative;
+    }
+
+    .timeline-scheme::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 54px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--brand-orange), var(--brand-red));
+        opacity: 0.4;
+    }
+
+    .timeline-point {
+        flex: 0 0 auto;
+        width: 130px;
+        text-align: center;
+        position: relative;
+    }
+
+    .timeline-point .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--brand-orange);
+        box-shadow: 0 0 12px rgba(255, 115, 0, 0.6);
+        margin: 0 auto 10px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .timeline-point .year {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--brand-orange);
+    }
+
+    .timeline-point .sym {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 2px;
+    }
+
+    .crypto-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .crypto-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 18px;
+        padding: 26px 28px;
+        display: grid;
+        grid-template-columns: 50px 56px 1fr auto;
+        gap: 20px;
+        align-items: center;
+    }
+
+    @media (max-width: 720px) {
+        .crypto-card {
+            grid-template-columns: 40px 48px 1fr;
+        }
+        .crypto-card .crypto-value-col {
+            grid-column: 1 / -1;
+            text-align: left;
+            margin-top: 10px;
+        }
+    }
+
+    .crypto-rank {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.25);
+        text-align: center;
+    }
+
+    .crypto-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #0a0e1a;
+    }
+
+    .crypto-body h3 {
+        margin: 0 0 4px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.15rem;
+    }
+
+    .crypto-body .meta {
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-bottom: 10px;
+    }
+
+    .crypto-body p {
+        margin: 0 0 14px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.92rem;
+        line-height: 1.55;
+    }
+
+    .cap-bar-track {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 100px;
+        overflow: hidden;
+    }
+
+    .cap-bar-fill {
+        height: 100%;
+        border-radius: 100px;
+        background: linear-gradient(90deg, var(--brand-orange), var(--brand-red));
+    }
+
+    .cap-bar-label {
+        font-size: 0.72rem;
+        color: var(--muted);
+        margin-top: 6px;
+    }
+
+    .crypto-value-col {
+        text-align: right;
+        min-width: 110px;
+    }
+
+    .crypto-value {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .crypto-change {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-top: 2px;
+    }
+
+    .up { color: #4ade80; }
+    .down { color: #f87171; }
+
+    .disclaimer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.78rem;
+        margin-top: 40px;
+    }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <nav class="main-nav">
+        <a href="Inicio.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="404.html">Contacto</a>
+        <a href="historia.html" class="active">Historia</a>
+    </nav>
+</header>
+
+<main>
+    <div class="page-head">
+        <h1>Historia de las Criptomonedas</h1>
+        <p>Un recorrido por el origen, el propósito y la evolución de los 10 proyectos más relevantes del ecosistema cripto.</p>
+    </div>
+
+    <div class="timeline-scheme" id="timeline">
+        <div class="timeline-point"><div class="dot"></div><div class="year">2009</div><div class="sym">BTC</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2014</div><div class="sym">USDT</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2015</div><div class="sym">ETH</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2017</div><div class="sym">BNB</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2017</div><div class="sym">ADA</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2018</div><div class="sym">USDC</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2012</div><div class="sym">XRP</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2013</div><div class="sym">DOGE</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2017</div><div class="sym">TRX</div></div>
+        <div class="timeline-point"><div class="dot"></div><div class="year">2020</div><div class="sym">SOL</div></div>
+    </div>
+
+    <div class="crypto-list">
+
+        <div class="crypto-card">
+            <div class="crypto-rank">1</div>
+            <div class="crypto-icon" style="background:#f7931a;">BTC</div>
+            <div class="crypto-body">
+                <h3>Bitcoin</h3>
+                <div class="meta">2009 · Creado por Satoshi Nakamoto (seudónimo)</div>
+                <p>La primera criptomoneda, propuesta en un whitepaper de 2008 como un sistema de efectivo electrónico peer-to-peer. Introdujo la blockchain como libro contable público y descentralizado.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:100%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$64,230</div>
+                <div class="crypto-change up">+2.4%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">2</div>
+            <div class="crypto-icon" style="background:#627eea;">ETH</div>
+            <div class="crypto-body">
+                <h3>Ethereum</h3>
+                <div class="meta">2015 · Creado por Vitalik Buterin y colaboradores</div>
+                <p>Introdujo los contratos inteligentes, permitiendo construir aplicaciones descentralizadas sobre su blockchain. Migró de Proof of Work a Proof of Stake en 2022 ("The Merge").</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:62%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$3,180</div>
+                <div class="crypto-change down">-1.1%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">3</div>
+            <div class="crypto-icon" style="background:#26a17b;">USDT</div>
+            <div class="crypto-body">
+                <h3>Tether (USDT)</h3>
+                <div class="meta">2014 · Desarrollado por Tether Limited</div>
+                <p>La primera stablecoin ampliamente adoptada, diseñada para mantener un valor estable de 1 USD. Es ampliamente usada como puente entre moneda fiat y criptoactivos.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:55%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$1.00</div>
+                <div class="crypto-change up">+0.01%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">4</div>
+            <div class="crypto-icon" style="background:#f3ba2f;">BNB</div>
+            <div class="crypto-body">
+                <h3>BNB</h3>
+                <div class="meta">2017 · Creado por Binance (Changpeng Zhao)</div>
+                <p>Nació como token de descuento en comisiones del exchange Binance. Hoy impulsa BNB Chain, una red compatible con contratos inteligentes tipo EVM.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:30%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$571</div>
+                <div class="crypto-change up">+0.6%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">5</div>
+            <div class="crypto-icon" style="background:#00a3ff;">SOL</div>
+            <div class="crypto-body">
+                <h3>Solana</h3>
+                <div class="meta">2020 · Creado por Anatoly Yakovenko</div>
+                <p>Introdujo el mecanismo "Proof of History" para ordenar transacciones con alta velocidad y bajas comisiones, consolidándose como hub de DeFi y NFTs.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:24%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$148</div>
+                <div class="crypto-change up">+5.8%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">6</div>
+            <div class="crypto-icon" style="background:#2775ca;">USDC</div>
+            <div class="crypto-body">
+                <h3>USD Coin (USDC)</h3>
+                <div class="meta">2018 · Creado por Circle y Coinbase (Consorcio Centre)</div>
+                <p>Stablecoin respaldada 1:1 por reservas en dólares, con énfasis en transparencia y auditorías regulares. Muy usada en protocolos DeFi.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:22%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$1.00</div>
+                <div class="crypto-change up">+0.00%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">7</div>
+            <div class="crypto-icon" style="background:#23292f;">XRP</div>
+            <div class="crypto-body">
+                <h3>XRP (Ripple)</h3>
+                <div class="meta">2012 · Creado por Chris Larsen y Jed McCaleb</div>
+                <p>Diseñado para acelerar pagos internacionales entre instituciones financieras. Atravesó años de incertidumbre regulatoria con la SEC en EE.UU., resuelta parcialmente en 2023.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:18%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$0.62</div>
+                <div class="crypto-change down">-2.9%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">8</div>
+            <div class="crypto-icon" style="background:#0033ad;">ADA</div>
+            <div class="crypto-body">
+                <h3>Cardano</h3>
+                <div class="meta">2017 · Creado por Charles Hoskinson</div>
+                <p>Blockchain desarrollada con enfoque académico y revisión por pares, utilizando Proof of Stake desde su diseño original a través del protocolo Ouroboros.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:12%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$0.24</div>
+                <div class="crypto-change up">+5.9%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">9</div>
+            <div class="crypto-icon" style="background:#c2a633;">DOGE</div>
+            <div class="crypto-body">
+                <h3>Dogecoin</h3>
+                <div class="meta">2013 · Creado por Billy Markus y Jackson Palmer</div>
+                <p>Nació como una parodia de las criptomonedas basada en el meme "Doge", pero construyó una comunidad sólida y se mantiene como una de las más conocidas del mercado.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:10%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$0.095</div>
+                <div class="crypto-change up">+10.3%</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <div class="crypto-rank">10</div>
+            <div class="crypto-icon" style="background:#ff060a;">TRX</div>
+            <div class="crypto-body">
+                <h3>TRON</h3>
+                <div class="meta">2017 · Creado por Justin Sun</div>
+                <p>Blockchain orientada a contenido digital y entretenimiento descentralizado, ampliamente utilizada también para transferencias de stablecoins como USDT por sus bajas comisiones.</p>
+                <div class="cap-bar-track"><div class="cap-bar-fill" style="width:9%;"></div></div>
+                <div class="cap-bar-label">Capitalización relativa</div>
+            </div>
+            <div class="crypto-value-col">
+                <div class="crypto-value">$0.16</div>
+                <div class="crypto-change up">+1.2%</div>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="disclaimer">Valores y porcentajes de referencia con fines educativos — no reflejan precios de mercado en tiempo real.</p>
+</main>
+
+</body>
+</html>
