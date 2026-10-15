@@ -8,9 +8,10 @@
   <link rel="icon" href="image (4).webp">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="Inicio.css">
+  <link rel="stylesheet" href="enhancements.css">
 </head>
 <body>
-
+<canvas id="particles-bg"></canvas>
   <header>
     <nav>
       <a href="404.html">Contacto</a>
@@ -39,22 +40,22 @@
     </div>
 
     <div class="estadisticas">
-      <div class="stat">
+      <div class="stat reveal">
         <div class="stat-label">Cap. de Mercado</div>
         <div class="stat-value">$2.41T</div>
         <div class="stat-change up">+1.8%</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal">
         <div class="stat-label">Volumen 24h</div>
         <div class="stat-value">$98.2B</div>
         <div class="stat-change down">-3.4%</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal">
         <div class="stat-label">Dominancia BTC</div>
         <div class="stat-value">52.3%</div>
         <div class="stat-change up">+0.2%</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal">
         <div class="stat-label">Miedo / Codicia</div>
         <div class="stat-value">72</div>
         <div class="stat-change up" style="color: #34d399;">Codicia</div>
@@ -62,7 +63,7 @@
     </div>
 
     <div class="contenido">
-      <div class="criptos">
+      <div class="criptos reveal">
         <h2>Principales Criptomonedas</h2>
         <ul>
           <li>
@@ -71,8 +72,8 @@
               <div class="crypto-name">Cardano</div>
               <div class="crypto-symbol">ADA</div>
             </div>
-            <div class="crypto-price">$0.2420</div>
-            <div class="crypto-change up">+5.98%</div>
+            <div class="crypto-price" data-coin-price="cardano">Cargando...</div>
+            <div class="crypto-change" data-coin-change="cardano">...</div>
           </li>
           <li>
             <div class="crypto-icon">XRP</div>
@@ -80,8 +81,8 @@
               <div class="crypto-name">Ripple</div>
               <div class="crypto-symbol">XRP</div>
             </div>
-            <div class="crypto-price">$1.48</div>
-            <div class="crypto-change up">+5.49%</div>
+            <div class="crypto-price" data-coin-price="ripple">Cargando...</div>
+            <div class="crypto-change" data-coin-change="ripple">...</div>
           </li>
           <li>
             <div class="crypto-icon">DOGE</div>
@@ -89,8 +90,8 @@
               <div class="crypto-name">Dogecoin</div>
               <div class="crypto-symbol">DOGE</div>
             </div>
-            <div class="crypto-price">$0.0954</div>
-            <div class="crypto-change up">+10.29%</div>
+            <div class="crypto-price" data-coin-price="dogecoin">Cargando...</div>
+            <div class="crypto-change" data-coin-change="dogecoin">...</div>
           </li>
           <li>
             <div class="crypto-icon">BNB</div>
@@ -98,8 +99,8 @@
               <div class="crypto-name">Binance Coin</div>
               <div class="crypto-symbol">BNB</div>
             </div>
-            <div class="crypto-price">$610.50</div>
-            <div class="crypto-change up">+4.78%</div>
+            <div class="crypto-price" data-coin-price="binancecoin">Cargando...</div>
+            <div class="crypto-change" data-coin-change="binancecoin">...</div>
           </li>
           <li>
             <div class="crypto-icon">AVAX</div>
@@ -107,8 +108,8 @@
               <div class="crypto-name">Avalanche</div>
               <div class="crypto-symbol">AVAX</div>
             </div>
-            <div class="crypto-price">$28.40</div>
-            <div class="crypto-change down">-1.13%</div>
+            <div class="crypto-price" data-coin-price="avalanche-2">Cargando...</div>
+            <div class="crypto-change" data-coin-change="avalanche-2">...</div>
           </li>
           <li>
             <div class="crypto-icon">DOT</div>
@@ -116,13 +117,12 @@
               <div class="crypto-name">Polkadot</div>
               <div class="crypto-symbol">DOT</div>
             </div>
-            <div class="crypto-price">$7.20</div>
-            <div class="crypto-change up">+4.80%</div>
+            <div class="crypto-price" data-coin-price="polkadot">Cargando...</div>
+            <div class="crypto-change" data-coin-change="polkadot">...</div>
           </li>
         </ul>
       </div>
-
-      <div class="chat">
+      <div class="chat reveal"> 
         <div class="chat-header">
           <div class="chat-avatar">🧠</div>
           <div class="chat-info">
@@ -150,7 +150,7 @@
 
       <div class="carousel-track" id="miniChartsTrack">
         
-        <div class="tarjeta-mini">
+        <div class="tarjeta-mini reveal">
           <div>
             <div class="tarjeta-mini-header">
               <div class="tarjeta-mini-info">
@@ -160,16 +160,16 @@
                   <span class="crypto-title-symbol">BTC</span>
                 </div>
               </div>
-              <div class="crypto-badge down">-0.05%</div>
+              <div class="crypto-badge" data-coin-change="bitcoin">...</div>
             </div>
-            <div class="tarjeta-mini-price">$60,100.00</div>
+            <div class="tarjeta-mini-price" data-coin-price="bitcoin">Cargando...</div>
           </div>
           <div class="tarjeta-mini-canvas-container">
             <canvas id="miniBtcChart"></canvas>
           </div>
         </div>
 
-        <div class="tarjeta-mini">
+        <div class="tarjeta-mini reveal">
           <div>
             <div class="tarjeta-mini-header">
               <div class="tarjeta-mini-info">
@@ -179,16 +179,16 @@
                   <span class="crypto-title-symbol">ETH</span>
                 </div>
               </div>
-              <div class="crypto-badge up">+2.01%</div>
+              <div class="crypto-badge" data-coin-change="ethereum">...</div>
             </div>
-            <div class="tarjeta-mini-price">$3,300.00</div>
+            <div class="tarjeta-mini-price" data-coin-price="ethereum">Cargando...</div>
           </div>
           <div class="tarjeta-mini-canvas-container">
             <canvas id="miniEthChart"></canvas>
           </div>
         </div>
 
-        <div class="tarjeta-mini">
+        <div class="tarjeta-mini reveal">
           <div>
             <div class="tarjeta-mini-header">
               <div class="tarjeta-mini-info">
@@ -198,16 +198,16 @@
                   <span class="crypto-title-symbol">SOL</span>
                 </div>
               </div>
-              <div class="crypto-badge up">+4.12%</div>
+              <div class="crypto-badge" data-coin-change="solana">...</div>
             </div>
-            <div class="tarjeta-mini-price">$165.00</div>
+            <div class="tarjeta-mini-price" data-coin-price="solana">Cargando...</div>
           </div>
           <div class="tarjeta-mini-canvas-container">
             <canvas id="miniSolChart"></canvas>
           </div>
         </div>
 
-        <div class="tarjeta-mini">
+        <div class="tarjeta-mini reveal">
           <div>
             <div class="tarjeta-mini-header">
               <div class="tarjeta-mini-info">
@@ -217,9 +217,9 @@
                   <span class="crypto-title-symbol">ADA</span>
                 </div>
               </div>
-              <div class="crypto-badge down">-1.20%</div>
+              <div class="crypto-badge" data-coin-change="cardano">...</div>
             </div>
-            <div class="tarjeta-mini-price">$0.2420</div>
+            <div class="tarjeta-mini-price" data-coin-price="cardano">Cargando...</div>
           </div>
           <div class="tarjeta-mini-canvas-container">
             <canvas id="miniAdaChart"></canvas>
@@ -233,7 +233,7 @@
       </button>
     </div>
 
-    <section class="features-section">
+    <section class="features-section reveal">
       <div>
         <div class="feature-content active" id="tab-estrategias">
           <h2>Nuestras mejores innovaciones —<br>para tu comodidad</h2>
@@ -293,6 +293,6 @@
 
   <script src="chat.js"></script>
   <script src="graficos.js"></script>
-
+<script src="enhancements.js"></script>
 </body>
 </html>
